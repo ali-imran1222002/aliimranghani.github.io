@@ -1,0 +1,2147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ali Imran Ghani — Full-Stack & AI Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ─── RESET & BASE ──────────────────────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      :root {
+        --bg: #080810;
+        --bg2: #0e0e1a;
+        --bg3: #13131f;
+        --card: #111120;
+        --border: rgba(255, 255, 255, 0.06);
+        --border2: rgba(255, 255, 255, 0.12);
+        --gold: #e9b84c;
+        --gold2: #f6d47c;
+        --teal: #2ee8c8;
+        --violet: #a78bfa;
+        --coral: #fb7185;
+        --white: #eeeef8;
+        --muted: #7a7a9a;
+        --muted2: #55556a;
+        --font-h: "Syne", sans-serif;
+        --font-b: "DM Sans", sans-serif;
+        --font-m: "JetBrains Mono", monospace;
+        --r: 14px;
+        --shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+      }
+      body {
+        font-family: var(--font-b);
+        background: var(--bg);
+        color: var(--white);
+        line-height: 1.65;
+        overflow-x: hidden;
+        cursor: none;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      /* ─── CUSTOM CURSOR ─────────────────────────────────────────────────────── */
+      .cursor {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: var(--gold);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid rgba(233, 184, 76, 0.4);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: all 0.18s ease;
+      }
+      body:hover .cursor {
+        opacity: 1;
+      }
+
+      /* ─── NOISE OVERLAY ─────────────────────────────────────────────────────── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ─── GRID BG ────────────────────────────────────────────────────────────── */
+      .grid-bg {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.025) 1px,
+            transparent 1px
+          );
+        background-size: 60px 60px;
+        mask-image: radial-gradient(
+          ellipse 80% 80% at 50% 50%,
+          black 40%,
+          transparent 100%
+        );
+      }
+
+      /* ─── NAV ────────────────────────────────────────────────────────────────── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        padding: 0 48px;
+        height: 68px;
+        background: rgba(8, 8, 16, 0.7);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: 20px;
+        color: var(--white);
+        letter-spacing: -0.5px;
+        margin-right: auto;
+      }
+      .nav-logo-icon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, var(--gold), var(--teal));
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 800;
+        color: #08080f;
+        font-family: var(--font-m);
+        flex-shrink: 0;
+      }
+      .nav-logo span {
+        color: var(--gold);
+      }
+      .nav-links {
+        display: flex;
+        gap: 4px;
+      }
+      .nav-link {
+        background: none;
+        border: none;
+        cursor: none;
+        font-family: var(--font-b);
+        font-size: 13.5px;
+        font-weight: 500;
+        color: var(--muted);
+        padding: 7px 16px;
+        border-radius: 30px;
+        transition: all 0.2s;
+      }
+      .nav-link:hover,
+      .nav-link.active {
+        color: var(--white);
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .nav-link.active {
+        color: var(--gold);
+      }
+      .nav-cta {
+        margin-left: 20px;
+        background: var(--gold);
+        color: #08080f;
+        font-family: var(--font-h);
+        font-weight: 700;
+        font-size: 13px;
+        padding: 9px 22px;
+        border-radius: 30px;
+        border: none;
+        cursor: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+        letter-spacing: -0.2px;
+      }
+      .nav-cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(233, 184, 76, 0.3);
+      }
+
+      /* ─── SECTIONS ───────────────────────────────────────────────────────────── */
+      .section {
+        display: none;
+        position: relative;
+        z-index: 1;
+        min-height: calc(100vh - 68px);
+        padding: 80px 48px 80px;
+      }
+      .section.active {
+        display: block;
+      }
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+      }
+
+      /* ─── HERO ───────────────────────────────────────────────────────────────── */
+      #s-hero {
+        padding-top: 100px;
+      }
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(233, 184, 76, 0.07);
+        border: 1px solid rgba(233, 184, 76, 0.18);
+        border-radius: 30px;
+        padding: 7px 18px;
+        font-family: var(--font-m);
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--gold);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 32px;
+        animation: fadeUp 0.8s 0.1s both;
+      }
+      .hero-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--teal);
+        border-radius: 50%;
+        animation: blink 2s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      .hero-title {
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: clamp(42px, 6vw, 72px);
+        line-height: 1.05;
+        letter-spacing: -2.5px;
+        margin-bottom: 24px;
+        animation: fadeUp 0.8s 0.2s both;
+      }
+      .hero-title .line2 {
+        color: var(--gold);
+      }
+      .hero-title .line3 {
+        color: var(--teal);
+      }
+
+      .hero-sub {
+        font-size: 17px;
+        color: var(--muted);
+        max-width: 560px;
+        line-height: 1.75;
+        margin-bottom: 44px;
+        font-weight: 300;
+        animation: fadeUp 0.8s 0.3s both;
+      }
+      .hero-sub strong {
+        color: var(--white);
+        font-weight: 500;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 72px;
+        animation: fadeUp 0.8s 0.4s both;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        background: var(--gold);
+        color: #08080f;
+        font-family: var(--font-h);
+        font-weight: 700;
+        font-size: 14px;
+        padding: 13px 30px;
+        border-radius: 30px;
+        border: none;
+        cursor: none;
+        transition: all 0.25s;
+        letter-spacing: -0.2px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 32px rgba(233, 184, 76, 0.35);
+      }
+      .btn-secondary {
+        background: transparent;
+        color: var(--white);
+        font-family: var(--font-h);
+        font-weight: 600;
+        font-size: 14px;
+        padding: 13px 30px;
+        border-radius: 30px;
+        border: 1px solid var(--border2);
+        cursor: none;
+        transition: all 0.25s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      /* stat strip */
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--border);
+        border-radius: var(--r);
+        overflow: hidden;
+        animation: fadeUp 0.8s 0.5s both;
+      }
+      .stat {
+        background: var(--card);
+        padding: 22px 28px;
+        border-right: 1px solid var(--border);
+        transition: background 0.2s;
+      }
+      .stat:last-child {
+        border-right: none;
+      }
+      .stat:hover {
+        background: rgba(233, 184, 76, 0.04);
+      }
+      .stat-n {
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: 30px;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .stat-l {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 6px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      /* floating tech tags */
+      .tech-orbit {
+        position: relative;
+        height: 340px;
+        margin-top: 60px;
+        animation: fadeUp 0.8s 0.6s both;
+      }
+      .orbit-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 110px;
+        height: 110px;
+        background: linear-gradient(
+          135deg,
+          rgba(233, 184, 76, 0.15),
+          rgba(46, 232, 200, 0.1)
+        );
+        border: 1px solid rgba(233, 184, 76, 0.25);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-h);
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--gold);
+        letter-spacing: 0.5px;
+        text-align: center;
+        line-height: 1.4;
+        box-shadow: 0 0 40px rgba(233, 184, 76, 0.12);
+      }
+      .orbit-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: 1px dashed rgba(255, 255, 255, 0.06);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .ring1 {
+        width: 200px;
+        height: 200px;
+        animation: spin 20s linear infinite;
+      }
+      .ring2 {
+        width: 310px;
+        height: 310px;
+        animation: spin 32s linear infinite reverse;
+      }
+      .tech-tag {
+        position: absolute;
+        background: var(--card);
+        border: 1px solid var(--border2);
+        border-radius: 30px;
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--white);
+        white-space: nowrap;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s;
+      }
+      .tech-tag:hover {
+        transform: scale(1.08);
+      }
+      @keyframes spin {
+        from {
+          transform: translate(-50%, -50%) rotate(0);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      /* ─── PROJECTS ────────────────────────────────────────────────────────────── */
+      .sec-eyebrow {
+        font-family: var(--font-m);
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--teal);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .sec-title {
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: clamp(30px, 4vw, 44px);
+        letter-spacing: -1.5px;
+        line-height: 1.1;
+        margin-bottom: 10px;
+      }
+      .sec-desc {
+        color: var(--muted);
+        font-size: 15px;
+        max-width: 560px;
+        line-height: 1.7;
+        margin-bottom: 48px;
+      }
+
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+        gap: 20px;
+      }
+
+      .p-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        cursor: none;
+      }
+      .p-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--border2);
+        box-shadow: var(--shadow);
+      }
+      .p-card-top {
+        padding: 26px 26px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .p-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        flex-shrink: 0;
+      }
+      .ic-gold {
+        background: rgba(233, 184, 76, 0.1);
+        border: 1px solid rgba(233, 184, 76, 0.2);
+      }
+      .ic-teal {
+        background: rgba(46, 232, 200, 0.08);
+        border: 1px solid rgba(46, 232, 200, 0.18);
+      }
+      .ic-violet {
+        background: rgba(167, 139, 250, 0.08);
+        border: 1px solid rgba(167, 139, 250, 0.18);
+      }
+      .ic-coral {
+        background: rgba(251, 113, 133, 0.08);
+        border: 1px solid rgba(251, 113, 133, 0.18);
+      }
+      .badge {
+        font-family: var(--font-m);
+        font-size: 10px;
+        font-weight: 500;
+        padding: 4px 10px;
+        border-radius: 30px;
+        letter-spacing: 0.5px;
+      }
+      .badge-real {
+        background: rgba(46, 232, 200, 0.1);
+        color: var(--teal);
+        border: 1px solid rgba(46, 232, 200, 0.2);
+      }
+      .badge-demo {
+        background: rgba(233, 184, 76, 0.1);
+        color: var(--gold);
+        border: 1px solid rgba(233, 184, 76, 0.2);
+      }
+
+      .p-body {
+        padding: 18px 26px 26px;
+      }
+      .p-title {
+        font-family: var(--font-h);
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: -0.4px;
+        margin-bottom: 8px;
+      }
+      .p-desc {
+        font-size: 13.5px;
+        color: var(--muted);
+        line-height: 1.65;
+        margin-bottom: 16px;
+      }
+      .impact-box {
+        background: rgba(233, 184, 76, 0.05);
+        border: 1px solid rgba(233, 184, 76, 0.1);
+        border-radius: 8px;
+        padding: 12px 14px;
+        margin-bottom: 16px;
+      }
+      .impact-label {
+        font-family: var(--font-m);
+        font-size: 9.5px;
+        font-weight: 500;
+        color: var(--gold);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .impact-text {
+        font-size: 12.5px;
+        color: var(--white);
+        line-height: 1.55;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .chip {
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 3px 10px;
+        font-family: var(--font-m);
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      /* ─── SERVICES ────────────────────────────────────────────────────────────── */
+      .srv-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+      }
+      .srv-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+        transition: all 0.25s;
+        cursor: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .srv-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 0 0,
+          rgba(233, 184, 76, 0.05) 0%,
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .srv-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--border2);
+      }
+      .srv-card:hover::before {
+        opacity: 1;
+      }
+      .srv-icon {
+        font-size: 30px;
+        margin-bottom: 18px;
+      }
+      .srv-title {
+        font-family: var(--font-h);
+        font-weight: 700;
+        font-size: 17px;
+        margin-bottom: 10px;
+        letter-spacing: -0.3px;
+      }
+      .srv-desc {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.65;
+        margin-bottom: 16px;
+      }
+      .srv-rate {
+        font-family: var(--font-m);
+        font-size: 12px;
+        color: var(--gold);
+      }
+
+      /* ─── SKILLS ──────────────────────────────────────────────────────────────── */
+      .skills-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .sk-group {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 24px 26px;
+      }
+      .sk-head {
+        font-family: var(--font-m);
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .sk-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .sk-name {
+        font-size: 13px;
+        min-width: 145px;
+        color: var(--white);
+      }
+      .sk-bar {
+        flex: 1;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      .sk-fill {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .fill-teal {
+        background: linear-gradient(90deg, var(--teal), var(--violet));
+      }
+      .fill-gold {
+        background: linear-gradient(90deg, var(--gold), var(--coral));
+      }
+      .sk-pct {
+        font-family: var(--font-m);
+        font-size: 10px;
+        color: var(--muted);
+        min-width: 30px;
+        text-align: right;
+      }
+
+      /* ─── ABOUT ───────────────────────────────────────────────────────────────── */
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 56px;
+        align-items: start;
+      }
+      .about-photo-wrap {
+        position: relative;
+      }
+      .about-photo {
+        width: 100%;
+        aspect-ratio: 3/4;
+        background: linear-gradient(135deg, var(--bg3), var(--card));
+        border: 1px solid var(--border2);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        overflow: hidden;
+        position: relative;
+      }
+      .about-photo::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(233, 184, 76, 0.06) 0%,
+          rgba(46, 232, 200, 0.04) 100%
+        );
+      }
+      .photo-avatar {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold), var(--teal));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: 28px;
+        color: #08080f;
+        box-shadow: 0 8px 32px rgba(233, 184, 76, 0.3);
+        position: relative;
+        z-index: 1;
+      }
+      .photo-name {
+        font-family: var(--font-h);
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: -0.3px;
+        position: relative;
+        z-index: 1;
+      }
+      .photo-role {
+        font-size: 12px;
+        color: var(--muted);
+        font-family: var(--font-m);
+        position: relative;
+        z-index: 1;
+      }
+      .photo-upload {
+        font-size: 11px;
+        color: var(--muted2);
+        font-family: var(--font-m);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 6px 12px;
+        position: relative;
+        z-index: 1;
+      }
+      .about-badge-wrap {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+      }
+      .about-badge {
+        flex: 1;
+        min-width: 100px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 12px;
+        text-align: center;
+      }
+      .about-badge-n {
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: 22px;
+        color: var(--gold);
+      }
+      .about-badge-l {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+
+      .about-content {
+      }
+      .about-name {
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: 36px;
+        letter-spacing: -1.5px;
+        margin-bottom: 6px;
+      }
+      .about-name span {
+        color: var(--gold);
+      }
+      .about-role-tag {
+        display: inline-block;
+        font-family: var(--font-m);
+        font-size: 11px;
+        color: var(--teal);
+        background: rgba(46, 232, 200, 0.08);
+        border: 1px solid rgba(46, 232, 200, 0.2);
+        border-radius: 30px;
+        padding: 5px 14px;
+        margin-bottom: 24px;
+        letter-spacing: 0.5px;
+      }
+      .about-bio p {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 14px;
+        font-weight: 300;
+      }
+      .about-bio strong {
+        color: var(--white);
+        font-weight: 500;
+      }
+
+      .about-highlights {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 28px;
+      }
+      .hl {
+        display: flex;
+        gap: 16px;
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px 18px;
+        transition: border-color 0.2s;
+      }
+      .hl:hover {
+        border-color: var(--border2);
+      }
+      .hl-ic {
+        font-size: 22px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+      .hl-title {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 3px;
+        font-family: var(--font-h);
+      }
+      .hl-desc {
+        font-size: 12.5px;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      /* popup modal for project detail */
+      .modal-bg {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(8px);
+        z-index: 2000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .modal-bg.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--bg2);
+        border: 1px solid var(--border2);
+        border-radius: 20px;
+        padding: 36px;
+        max-width: 560px;
+        width: 100%;
+        position: relative;
+        animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes modalIn {
+        from {
+          transform: scale(0.92);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: var(--bg3);
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: none;
+        color: var(--muted);
+        transition: all 0.2s;
+      }
+      .modal-close:hover {
+        color: var(--white);
+        border-color: var(--border2);
+      }
+      .modal-badge {
+        margin-bottom: 16px;
+      }
+      .modal-title {
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: 22px;
+        letter-spacing: -0.5px;
+        margin-bottom: 10px;
+      }
+      .modal-desc {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 18px;
+      }
+      .modal-impact {
+        background: rgba(233, 184, 76, 0.06);
+        border: 1px solid rgba(233, 184, 76, 0.12);
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 18px;
+      }
+      .modal-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      /* CTA section */
+      .cta-wrap {
+        background: linear-gradient(
+          135deg,
+          rgba(233, 184, 76, 0.06) 0%,
+          rgba(46, 232, 200, 0.04) 100%
+        );
+        border: 1px solid rgba(233, 184, 76, 0.15);
+        border-radius: 20px;
+        padding: 60px 48px;
+        text-align: center;
+        margin-top: 64px;
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-wrap::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 240px;
+        height: 240px;
+        background: radial-gradient(
+          circle,
+          rgba(233, 184, 76, 0.08) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
+      .cta-title {
+        font-family: var(--font-h);
+        font-weight: 800;
+        font-size: 36px;
+        letter-spacing: -1.5px;
+        margin-bottom: 12px;
+      }
+      .cta-desc {
+        color: var(--muted);
+        font-size: 15px;
+        margin-bottom: 32px;
+        font-weight: 300;
+      }
+
+      /* ─── ANIMATIONS ──────────────────────────────────────────────────────────── */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* ─── FOOTER ──────────────────────────────────────────────────────────────── */
+      footer {
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--border);
+        padding: 28px 48px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .footer-text {
+        font-size: 12px;
+        color: var(--muted2);
+      }
+      .footer-text span {
+        color: var(--gold);
+      }
+      .footer-links {
+        display: flex;
+        gap: 20px;
+      }
+      .footer-link {
+        font-size: 12px;
+        color: var(--muted);
+        transition: color 0.2s;
+      }
+      .footer-link:hover {
+        color: var(--white);
+      }
+
+      /* ─── SCROLLBAR ───────────────────────────────────────────────────────────── */
+      ::-webkit-scrollbar {
+        width: 4px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--muted2);
+        border-radius: 4px;
+      }
+
+      /* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+      @media (max-width: 800px) {
+        nav {
+          padding: 0 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .section {
+          padding: 70px 20px 60px;
+        }
+        .hero-title {
+          font-size: 38px;
+        }
+        .hero-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .tech-orbit {
+          display: none;
+        }
+        .skills-wrap {
+          grid-template-columns: 1fr;
+        }
+        .about-grid {
+          grid-template-columns: 1fr;
+        }
+        footer {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cring"></div>
+    <div class="grid-bg"></div>
+
+    <!-- ═══════════════════ NAV ═══════════════════════════════════════════════ -->
+    <nav>
+      <div class="nav-logo">
+        <div class="nav-logo-icon">AIG</div>
+        <span>Ali Imran <span>Ghani</span></span>
+      </div>
+      <div class="nav-links">
+        <button class="nav-link active" onclick="show('hero',this)">
+          Home
+        </button>
+        <button class="nav-link" onclick="show('projects',this)">
+          Projects
+        </button>
+        <button class="nav-link" onclick="show('services',this)">
+          Services
+        </button>
+        <button class="nav-link" onclick="show('skills',this)">Skills</button>
+        <button class="nav-link" onclick="show('about',this)">About</button>
+      </div>
+      <button
+        class="nav-cta"
+        onclick="show('about',document.querySelectorAll('.nav-link')[4])"
+      >
+        Let's Talk →
+      </button>
+    </nav>
+
+    <!-- ═══════════════════ HERO ══════════════════════════════════════════════ -->
+    <div class="section active" id="s-hero">
+      <div class="wrap">
+        <div class="hero-eyebrow">
+          <span class="hero-dot"></span>
+          Available for New Projects
+        </div>
+
+        <h1 class="hero-title">
+          I Build Software<br />
+          <span class="line2">That Drives</span><br />
+          <span class="line3">Real Results.</span>
+        </h1>
+
+        <p class="hero-sub">
+          CS graduate specializing in <strong>full-stack web apps</strong>,
+          <strong>cross-platform mobile</strong>, and
+          <strong>AI-powered automation</strong>. I take ideas from whiteboard
+          to production — end-to-end, no hand-holding required.
+        </p>
+
+        <div class="hero-actions">
+          <button
+            class="btn-primary"
+            onclick="show('projects',document.querySelectorAll('.nav-link')[1])"
+          >
+            View My Work →
+          </button>
+          <button
+            class="btn-secondary"
+            onclick="show('about',document.querySelectorAll('.nav-link')[4])"
+          >
+            About Me
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-n">6+</div>
+            <div class="stat-l">Projects Delivered</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">3</div>
+            <div class="stat-l">Tech Domains</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">100%</div>
+            <div class="stat-l">End-to-End Dev</div>
+          </div>
+          <div class="stat">
+            <div class="stat-n">&lt;24h</div>
+            <div class="stat-l">Response Time</div>
+          </div>
+        </div>
+
+        <!-- Floating tech orbit -->
+        <div class="tech-orbit" aria-hidden="true">
+          <div class="orbit-ring ring1"></div>
+          <div class="orbit-ring ring2"></div>
+          <div class="orbit-center">FULL<br />STACK<br />& AI</div>
+          <!-- ring1 tags -->
+          <div class="tech-tag" style="top: 34%; left: 57%">React</div>
+          <div class="tech-tag" style="top: 12%; left: 44%">Node.js</div>
+          <div class="tech-tag" style="top: 60%; left: 62%">Python</div>
+          <div class="tech-tag" style="top: 75%; left: 41%">Flutter</div>
+          <!-- ring2 tags -->
+          <div class="tech-tag" style="top: 5%; left: 60%">OpenAI API</div>
+          <div class="tech-tag" style="top: 18%; left: 18%">PostgreSQL</div>
+          <div class="tech-tag" style="top: 55%; left: 5%">LangChain</div>
+          <div class="tech-tag" style="top: 80%; left: 62%">React Native</div>
+          <div class="tech-tag" style="top: 85%; left: 22%">AWS · Docker</div>
+          <div class="tech-tag" style="top: 2%; left: 30%">Next.js</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ PROJECTS ══════════════════════════════════════════ -->
+    <div class="section" id="s-projects">
+      <div class="wrap">
+        <div class="sec-eyebrow reveal">Portfolio</div>
+        <h2 class="sec-title reveal">Selected Work</h2>
+        <p class="sec-desc reveal">
+          Real deliverables and architected case studies — each built around
+          business outcomes, not just technical ability.
+        </p>
+
+        <div class="project-grid">
+          <div class="p-card reveal" onclick="openModal('m1')">
+            <div class="p-card-top">
+              <div class="p-icon ic-gold">📦</div>
+              <span class="badge badge-real">Real Project</span>
+            </div>
+            <div class="p-body">
+              <div class="p-title">Inventory & Business System</div>
+              <div class="p-desc">
+                Complete business management platform for a mobile retail store.
+                Inventory lifecycle, sales, P&L analytics, expense tracking, and
+                invoice generation — all offline-capable.
+              </div>
+              <div class="impact-box">
+                <div class="impact-label">Business Impact</div>
+                <div class="impact-text">
+                  ~80% reduction in stock reconciliation time. Real-time P&L
+                  dashboard replacing manual ledgers.
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">HTML/CSS/JS</span
+                ><span class="chip">Chart.js</span
+                ><span class="chip">Analytics</span
+                ><span class="chip">Invoice Gen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-card reveal" onclick="openModal('m2')">
+            <div class="p-card-top">
+              <div class="p-icon ic-teal">🤖</div>
+              <span class="badge badge-demo">Case Study</span>
+            </div>
+            <div class="p-body">
+              <div class="p-title">AI Customer Support Chatbot</div>
+              <div class="p-desc">
+                GPT-4 chatbot trained on business FAQs. Streaming responses,
+                conversation logging, and escalation to human agents. Deployable
+                on web, WhatsApp, or Slack.
+              </div>
+              <div class="impact-box">
+                <div class="impact-label">Business Impact</div>
+                <div class="impact-text">
+                  65% ticket volume reduction. Response time: hours → under 2
+                  seconds.
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">Next.js</span><span class="chip">OpenAI</span
+                ><span class="chip">LangChain</span
+                ><span class="chip">Pinecone</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-card reveal" onclick="openModal('m3')">
+            <div class="p-card-top">
+              <div class="p-icon ic-violet">🚀</div>
+              <span class="badge badge-demo">Case Study</span>
+            </div>
+            <div class="p-body">
+              <div class="p-title">SaaS MVP — Multi-Tenant Platform</div>
+              <div class="p-desc">
+                Full-stack SaaS with Stripe billing, role-based access,
+                real-time collaboration, and admin analytics. Production-ready
+                template for B2B founders.
+              </div>
+              <div class="impact-box">
+                <div class="impact-label">Architecture</div>
+                <div class="impact-text">
+                  Scalable to 10,000+ users from day one. Row-level security
+                  multi-tenancy.
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">React</span><span class="chip">Node.js</span
+                ><span class="chip">PostgreSQL</span
+                ><span class="chip">Stripe</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-card reveal" onclick="openModal('m4')">
+            <div class="p-card-top">
+              <div class="p-icon ic-coral">⚙️</div>
+              <span class="badge badge-demo">Case Study</span>
+            </div>
+            <div class="p-body">
+              <div class="p-title">Business Workflow Automation</div>
+              <div class="p-desc">
+                Lead capture → AI enrichment → personalized email → CRM record →
+                Slack alert. Zero human steps in the pipeline.
+              </div>
+              <div class="impact-box">
+                <div class="impact-label">Efficiency</div>
+                <div class="impact-text">
+                  45 min manual → 90 seconds automated. Scales to 1,000+
+                  leads/day at zero extra cost.
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">Make</span><span class="chip">OpenAI</span
+                ><span class="chip">Airtable</span
+                ><span class="chip">Slack API</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-card reveal" onclick="openModal('m5')">
+            <div class="p-card-top">
+              <div class="p-icon ic-teal">📱</div>
+              <span class="badge badge-demo">Case Study</span>
+            </div>
+            <div class="p-body">
+              <div class="p-title">Cross-Platform Mobile App</div>
+              <div class="p-desc">
+                Expense tracker for iOS & Android with offline-first
+                architecture, Firebase sync, budget alerts, and category
+                analytics. One codebase, both platforms.
+              </div>
+              <div class="impact-box">
+                <div class="impact-label">Delivery</div>
+                <div class="impact-text">
+                  Zero to App-Store-ready in under 4 weeks. Zero data loss on
+                  poor connections.
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">React Native</span
+                ><span class="chip">Expo</span
+                ><span class="chip">Firebase</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-card reveal" onclick="openModal('m6')">
+            <div class="p-card-top">
+              <div class="p-icon ic-gold">🛍️</div>
+              <span class="badge badge-demo">Case Study</span>
+            </div>
+            <div class="p-body">
+              <div class="p-title">E-Commerce with AI Recommendations</div>
+              <div class="p-desc">
+                Next.js storefront with an AI recommendation engine driven by
+                browsing behaviour and purchase history. Stripe-integrated
+                checkout.
+              </div>
+              <div class="impact-box">
+                <div class="impact-label">Conversion</div>
+                <div class="impact-text">
+                  3× session depth. +22% average order value. Smart cart
+                  abandonment triggers.
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">Next.js</span
+                ><span class="chip">FastAPI</span
+                ><span class="chip">OpenAI</span
+                ><span class="chip">Stripe</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /project-grid -->
+      </div>
+    </div>
+
+    <!-- ═══════════════════ SERVICES ══════════════════════════════════════════ -->
+    <div class="section" id="s-services">
+      <div class="wrap">
+        <div class="sec-eyebrow reveal">What I Offer</div>
+        <h2 class="sec-title reveal">Services</h2>
+        <p class="sec-desc reveal">
+          Not a ticket-taker — a technical partner who owns outcomes from
+          architecture to deployment.
+        </p>
+
+        <div class="srv-grid">
+          <div class="srv-card reveal">
+            <div class="srv-icon">💻</div>
+            <div class="srv-title">Web Application & SaaS</div>
+            <div class="srv-desc">
+              Full-stack apps using React, Next.js, Node.js, and Python. From
+              landing pages to complex multi-tenant SaaS platforms built for
+              scale.
+            </div>
+            <div class="srv-rate">Starting at $1,500 · Fixed or Hourly</div>
+          </div>
+          <div class="srv-card reveal">
+            <div class="srv-icon">📱</div>
+            <div class="srv-title">Mobile App Development</div>
+            <div class="srv-desc">
+              Cross-platform iOS & Android apps using React Native or Flutter.
+              One codebase, native performance, App Store deployment included.
+            </div>
+            <div class="srv-rate">Starting at $2,000 · Fixed Price</div>
+          </div>
+          <div class="srv-card reveal">
+            <div class="srv-icon">🤖</div>
+            <div class="srv-title">AI Chatbot Development</div>
+            <div class="srv-desc">
+              Custom GPT-4 assistants trained on your data. Deployed on website,
+              WhatsApp, or Slack. Cuts support costs and response time
+              measurably.
+            </div>
+            <div class="srv-rate">Starting at $800 · Fixed Price</div>
+          </div>
+          <div class="srv-card reveal">
+            <div class="srv-icon">⚙️</div>
+            <div class="srv-title">Workflow Automation</div>
+            <div class="srv-desc">
+              Eliminate repetitive work using Make, n8n, Zapier, or custom
+              Python pipelines. CRMs, emails, documents — connected and fully
+              automated.
+            </div>
+            <div class="srv-rate">Starting at $500 · Fixed Price</div>
+          </div>
+          <div class="srv-card reveal">
+            <div class="srv-icon">🏗️</div>
+            <div class="srv-title">SaaS MVP Development</div>
+            <div class="srv-desc">
+              Complete SaaS builds: auth, Stripe billing, multi-tenancy,
+              dashboards, admin panels. Launch-ready MVPs in 4–8 weeks,
+              architected to scale.
+            </div>
+            <div class="srv-rate">Starting at $2,500 · Fixed Price</div>
+          </div>
+          <div class="srv-card reveal">
+            <div class="srv-icon">🔌</div>
+            <div class="srv-title">API & Integrations</div>
+            <div class="srv-desc">
+              RESTful and GraphQL APIs. Integrations with Stripe, Twilio,
+              SendGrid, HubSpot, Shopify, and 50+ platforms. Your ecosystem,
+              connected cleanly.
+            </div>
+            <div class="srv-rate">Starting at $400 · Hourly or Fixed</div>
+          </div>
+        </div>
+
+        <div class="cta-wrap reveal">
+          <h2 class="cta-title">Let's Build Something Worth Building.</h2>
+          <p class="cta-desc">
+            Send me a project brief and I'll respond within 24 hours with
+            honest, specific feedback — no commitment required.
+          </p>
+          <button
+            class="btn-primary"
+            style="margin: 0 auto"
+            onclick="show('about',document.querySelectorAll('.nav-link')[4])"
+          >
+            Get In Touch →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ SKILLS ════════════════════════════════════════════ -->
+    <div class="section" id="s-skills">
+      <div class="wrap">
+        <div class="sec-eyebrow reveal">Expertise</div>
+        <h2 class="sec-title reveal">Skills & Stack</h2>
+        <p class="sec-desc reveal">
+          Full-stack fluency across frontend, backend, mobile, AI, and cloud —
+          the complete toolkit for end-to-end delivery.
+        </p>
+
+        <div class="skills-wrap">
+          <div class="sk-group reveal">
+            <div class="sk-head" style="color: var(--teal)">Frontend</div>
+            <div class="sk-row">
+              <span class="sk-name">React / Next.js</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="92%"
+                ></div>
+              </div>
+              <span class="sk-pct">92%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">TypeScript</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="85%"
+                ></div>
+              </div>
+              <span class="sk-pct">85%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Tailwind CSS</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="90%"
+                ></div>
+              </div>
+              <span class="sk-pct">90%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">React Native</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="82%"
+                ></div>
+              </div>
+              <span class="sk-pct">82%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Flutter</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="72%"
+                ></div>
+              </div>
+              <span class="sk-pct">72%</span>
+            </div>
+          </div>
+          <div class="sk-group reveal">
+            <div class="sk-head" style="color: var(--violet)">Backend</div>
+            <div class="sk-row">
+              <span class="sk-name">Node.js / Express</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="90%"
+                ></div>
+              </div>
+              <span class="sk-pct">90%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Python / FastAPI</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="85%"
+                ></div>
+              </div>
+              <span class="sk-pct">85%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">REST API Design</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="92%"
+                ></div>
+              </div>
+              <span class="sk-pct">92%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">GraphQL</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="75%"
+                ></div>
+              </div>
+              <span class="sk-pct">75%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">PostgreSQL / MongoDB</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-teal"
+                  style="width: 0"
+                  data-w="88%"
+                ></div>
+              </div>
+              <span class="sk-pct">88%</span>
+            </div>
+          </div>
+          <div class="sk-group reveal">
+            <div class="sk-head" style="color: var(--gold)">
+              AI & Automation
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">OpenAI / GPT-4</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="88%"
+                ></div>
+              </div>
+              <span class="sk-pct">88%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">LangChain</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="80%"
+                ></div>
+              </div>
+              <span class="sk-pct">80%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Make / n8n / Zapier</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="85%"
+                ></div>
+              </div>
+              <span class="sk-pct">85%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Prompt Engineering</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="87%"
+                ></div>
+              </div>
+              <span class="sk-pct">87%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">RAG Pipelines</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="78%"
+                ></div>
+              </div>
+              <span class="sk-pct">78%</span>
+            </div>
+          </div>
+          <div class="sk-group reveal">
+            <div class="sk-head" style="color: var(--coral)">
+              Cloud & DevOps
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">AWS</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="78%"
+                ></div>
+              </div>
+              <span class="sk-pct">78%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Vercel / Railway</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="90%"
+                ></div>
+              </div>
+              <span class="sk-pct">90%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Docker</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="80%"
+                ></div>
+              </div>
+              <span class="sk-pct">80%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Git / GitHub</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="95%"
+                ></div>
+              </div>
+              <span class="sk-pct">95%</span>
+            </div>
+            <div class="sk-row">
+              <span class="sk-name">Firebase</span>
+              <div class="sk-bar">
+                <div
+                  class="sk-fill fill-gold"
+                  style="width: 0"
+                  data-w="85%"
+                ></div>
+              </div>
+              <span class="sk-pct">85%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ ABOUT ═════════════════════════════════════════════ -->
+    <div class="section" id="s-about">
+      <div class="wrap">
+        <div class="sec-eyebrow reveal">Background</div>
+        <h2 class="sec-title reveal">About Me</h2>
+
+        <div class="about-grid">
+          <!-- Photo + stats column -->
+          <div class="about-photo-wrap reveal">
+            <div class="about-photo">
+              <img src="Ali Imran Professional Image.jpeg" />
+              <div class="photo-avatar">AIG</div>
+            </div>
+            <div class="about-badge-wrap">
+              <div class="about-badge">
+                <div class="about-badge-n">6+</div>
+                <div class="about-badge-l">Projects</div>
+              </div>
+              <div class="about-badge">
+                <div class="about-badge-n">3</div>
+                <div class="about-badge-l">Domains</div>
+              </div>
+              <div class="about-badge">
+                <div class="about-badge-n">BS</div>
+                <div class="about-badge-l">CS Degree</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Text column -->
+          <div class="about-content reveal">
+            <div class="about-name">Ali Imran <span>Ghani</span></div>
+            <div class="about-role-tag">
+              Full-Stack Developer · AI Engineer · SaaS Builder
+            </div>
+
+            <div class="about-bio">
+              <p>
+                I'm a <strong>Computer Science graduate</strong> with deep
+                hands-on experience across web development, mobile apps, and
+                AI-powered solutions. Most recently I built a
+                <strong
+                  >complete inventory and business management system</strong
+                >
+                for a real mobile phone retail business — replacing manual
+                ledgers with a real-time dashboard that saved hours of work
+                every day.
+              </p>
+              <p>
+                Before I write a single line of code, I ask:
+                <strong
+                  >What problem is this actually solving? What does success look
+                  like in 6 months?</strong
+                >
+                That question separates a contractor from a strategic technical
+                partner — and that's the role I take in every project.
+              </p>
+              <p>
+                I specialize in working with
+                <strong>startups, SaaS founders, and business owners</strong>
+                who need an end-to-end technical partner. My code ships on time.
+                My communication is proactive. My handoffs are clean and
+                documented so your team can maintain what I built — without me.
+                That's intentional.
+              </p>
+            </div>
+
+            <div class="about-highlights">
+              <div class="hl">
+                <div class="hl-ic">🎓</div>
+                <div>
+                  <div class="hl-title">BS Computer Science</div>
+                  <div class="hl-desc">
+                    Strong foundation in algorithms, data structures, systems
+                    design, and software engineering principles.
+                  </div>
+                </div>
+              </div>
+              <div class="hl">
+                <div class="hl-ic">🔄</div>
+                <div>
+                  <div class="hl-title">End-to-End Ownership</div>
+                  <div class="hl-desc">
+                    Frontend, backend, database, deployment — I handle the full
+                    stack so you don't manage five different contractors.
+                  </div>
+                </div>
+              </div>
+              <div class="hl">
+                <div class="hl-ic">🧠</div>
+                <div>
+                  <div class="hl-title">AI-Native Development</div>
+                  <div class="hl-desc">
+                    Not just using AI tools — building with them. GPT-4,
+                    LangChain, vector databases, and production RAG pipelines.
+                  </div>
+                </div>
+              </div>
+              <div class="hl">
+                <div class="hl-ic">📋</div>
+                <div>
+                  <div class="hl-title">Clean, Documented Handoffs</div>
+                  <div class="hl-desc">
+                    Your team can maintain and extend what I build — no cryptic
+                    code, no dependency on me to continue.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-wrap reveal">
+          <h2 class="cta-title">Ready to Start a Project?</h2>
+          <p class="cta-desc">
+            Message me with a brief description of what you need. I'll respond
+            with honest, specific feedback before you've committed to anything.
+          </p>
+          <a
+            class="btn-primary"
+            href="mailto:your@email.com"
+            style="display: inline-flex"
+            >Send Me a Message →</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ MODALS ════════════════════════════════════════════ -->
+    <div class="modal-bg" id="modal-overlay" onclick="closeModal(event)">
+      <div class="modal" id="m1">
+        <div class="modal-close" onclick="closeModalById('m1')">✕</div>
+        <div class="modal-badge">
+          <span class="badge badge-real">Real Project</span>
+        </div>
+        <div class="modal-title">Inventory & Business Management System</div>
+        <div class="modal-desc">
+          A complete business management platform built for a mobile phone
+          retail store. Covers full inventory lifecycle, sales transactions,
+          purchase history, profit/loss analytics, expense tracking, and
+          printable invoice generation — all in a single offline-capable web
+          application. No external SaaS subscription required.
+        </div>
+        <div class="modal-impact">
+          <div class="impact-label">Business Impact</div>
+          <div class="impact-text">
+            Replaced manual ledger-based tracking with a real-time dashboard.
+            Reduced daily stock reconciliation time by ~80%. Owner now has
+            instant visibility into profits, low-stock alerts, and monthly
+            financial reports.
+          </div>
+        </div>
+        <div class="modal-stack chips">
+          <span class="chip">HTML/CSS/JS</span><span class="chip">Chart.js</span
+          ><span class="chip">KPI Dashboard</span
+          ><span class="chip">CRUD Inventory</span
+          ><span class="chip">Invoice Generator</span
+          ><span class="chip">Print-to-PDF</span
+          ><span class="chip">Expense Tracker</span>
+        </div>
+      </div>
+
+      <div class="modal" id="m2" style="display: none">
+        <div class="modal-close" onclick="closeModalById('m2')">✕</div>
+        <div class="modal-badge">
+          <span class="badge badge-demo">Case Study</span>
+        </div>
+        <div class="modal-title">AI Customer Support Chatbot</div>
+        <div class="modal-desc">
+          GPT-4 powered chatbot trained on business documentation and FAQs.
+          Real-time streaming responses, automatic conversation logging, and
+          smooth escalation to human agents when needed. Deployable on website,
+          WhatsApp, or Slack with a single integration.
+        </div>
+        <div class="modal-impact">
+          <div class="impact-label">Business Impact</div>
+          <div class="impact-text">
+            Simulated support ticket volume reduced by 65%. Response time
+            dropped from hours to under 2 seconds. Capable of 500+ concurrent
+            users at zero additional staffing cost.
+          </div>
+        </div>
+        <div class="modal-stack chips">
+          <span class="chip">Next.js</span><span class="chip">OpenAI API</span
+          ><span class="chip">LangChain</span><span class="chip">Pinecone</span
+          ><span class="chip">RAG Pipeline</span
+          ><span class="chip">Vercel</span>
+        </div>
+      </div>
+
+      <div class="modal" id="m3" style="display: none">
+        <div class="modal-close" onclick="closeModalById('m3')">✕</div>
+        <div class="modal-badge">
+          <span class="badge badge-demo">Case Study</span>
+        </div>
+        <div class="modal-title">
+          SaaS MVP — Multi-Tenant Task Management Platform
+        </div>
+        <div class="modal-desc">
+          Production-ready SaaS application with Stripe subscription billing,
+          role-based access control, real-time collaboration, and an admin
+          analytics dashboard. Built as a launch template for B2B SaaS founders
+          who need to move fast without sacrificing architecture quality.
+        </div>
+        <div class="modal-impact">
+          <div class="impact-label">Architecture</div>
+          <div class="impact-text">
+            Multi-tenancy via row-level security. Stripe webhooks for full
+            subscription lifecycle. Scales to 10,000+ users from day one without
+            structural changes.
+          </div>
+        </div>
+        <div class="modal-stack chips">
+          <span class="chip">React</span><span class="chip">Node.js</span
+          ><span class="chip">PostgreSQL</span><span class="chip">Stripe</span
+          ><span class="chip">JWT Auth</span><span class="chip">Redis</span
+          ><span class="chip">Docker</span><span class="chip">AWS</span>
+        </div>
+      </div>
+
+      <div class="modal" id="m4" style="display: none">
+        <div class="modal-close" onclick="closeModalById('m4')">✕</div>
+        <div class="modal-badge">
+          <span class="badge badge-demo">Case Study</span>
+        </div>
+        <div class="modal-title">Business Workflow Automation Pipeline</div>
+        <div class="modal-desc">
+          End-to-end automation that captures leads via Google Form, enriches
+          them with AI-generated personalization, sends a custom email, creates
+          a CRM record, and notifies the sales team on Slack — all without a
+          single human step in between.
+        </div>
+        <div class="modal-impact">
+          <div class="impact-label">Efficiency</div>
+          <div class="impact-text">
+            Follow-up time: 45 minutes (manual) → 90 seconds (automated). Scales
+            to 1,000+ leads per day at zero extra operational cost.
+          </div>
+        </div>
+        <div class="modal-stack chips">
+          <span class="chip">Make (Integromat)</span
+          ><span class="chip">OpenAI</span><span class="chip">Gmail API</span
+          ><span class="chip">Airtable</span><span class="chip">Slack API</span
+          ><span class="chip">Webhooks</span>
+        </div>
+      </div>
+
+      <div class="modal" id="m5" style="display: none">
+        <div class="modal-close" onclick="closeModalById('m5')">✕</div>
+        <div class="modal-badge">
+          <span class="badge badge-demo">Case Study</span>
+        </div>
+        <div class="modal-title">
+          Cross-Platform Mobile App — Expense Tracker
+        </div>
+        <div class="modal-desc">
+          iOS and Android app built with React Native. Features offline-first
+          architecture, real-time Firebase sync, budget alerts, and detailed
+          category analytics. One codebase, two platforms, native performance on
+          both.
+        </div>
+        <div class="modal-impact">
+          <div class="impact-label">Delivery</div>
+          <div class="impact-text">
+            Zero data loss on poor connections. Shipped from zero to
+            App-Store-ready in under 4 weeks. Multi-device sync via Firebase.
+          </div>
+        </div>
+        <div class="modal-stack chips">
+          <span class="chip">React Native</span><span class="chip">Expo</span
+          ><span class="chip">Firebase</span
+          ><span class="chip">AsyncStorage</span><span class="chip">iOS</span
+          ><span class="chip">Android</span>
+        </div>
+      </div>
+
+      <div class="modal" id="m6" style="display: none">
+        <div class="modal-close" onclick="closeModalById('m6')">✕</div>
+        <div class="modal-badge">
+          <span class="badge badge-demo">Case Study</span>
+        </div>
+        <div class="modal-title">E-Commerce Store with AI Recommendations</div>
+        <div class="modal-desc">
+          Custom Next.js storefront with an AI recommendation engine. Products
+          are suggested based on browsing behaviour, purchase history, and
+          real-time inventory data. Full Stripe checkout integration with
+          webhook-based order management.
+        </div>
+        <div class="modal-impact">
+          <div class="impact-label">Conversion</div>
+          <div class="impact-text">
+            3× increase in session depth. +22% average order value. Cart
+            abandonment reduced via smart re-engagement triggers.
+          </div>
+        </div>
+        <div class="modal-stack chips">
+          <span class="chip">Next.js</span
+          ><span class="chip">Python / FastAPI</span
+          ><span class="chip">OpenAI</span><span class="chip">Stripe</span
+          ><span class="chip">MongoDB</span><span class="chip">Vercel</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════ FOOTER ════════════════════════════════════════════ -->
+    <footer>
+      <div class="footer-text">
+        © 2025 <span>Ali Imran Ghani</span> · Full-Stack & AI Developer
+      </div>
+      <div class="footer-links">
+        <a
+          class="footer-link"
+          href="#"
+          onclick="show('projects',document.querySelectorAll('.nav-link')[1]);return false"
+          >Projects</a
+        >
+        <a
+          class="footer-link"
+          href="#"
+          onclick="show('services',document.querySelectorAll('.nav-link')[2]);return false"
+          >Services</a
+        >
+        <a class="footer-link" href="mailto:your@email.com">Email Me</a>
+      </div>
+    </footer>
+
+    <script>
+      /* ── Custom cursor ─────────────────────────────────────────────────── */
+      const cur = document.getElementById("cursor");
+      const ring = document.getElementById("cring");
+      document.addEventListener("mousemove", (e) => {
+        cur.style.left = e.clientX + "px";
+        cur.style.top = e.clientY + "px";
+        ring.style.left = e.clientX + "px";
+        ring.style.top = e.clientY + "px";
+      });
+      document
+        .querySelectorAll("button,a,.p-card,.modal-close")
+        .forEach((el) => {
+          el.addEventListener("mouseenter", () => {
+            ring.style.transform = "translate(-50%,-50%) scale(1.8)";
+            ring.style.borderColor = "rgba(233,184,76,.6)";
+          });
+          el.addEventListener("mouseleave", () => {
+            ring.style.transform = "translate(-50%,-50%) scale(1)";
+            ring.style.borderColor = "rgba(233,184,76,.4)";
+          });
+        });
+
+      /* ── Section switching ─────────────────────────────────────────────── */
+      function show(id, btn) {
+        document
+          .querySelectorAll(".section")
+          .forEach((s) => s.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-link")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("s-" + id).classList.add("active");
+        if (btn) btn.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(animateSkills, 200);
+        setTimeout(revealAll, 100);
+      }
+
+      /* ── Reveal on scroll ──────────────────────────────────────────────── */
+      function revealAll() {
+        const els = document.querySelectorAll(".section.active .reveal");
+        els.forEach((el, i) => {
+          setTimeout(() => el.classList.add("visible"), i * 80);
+        });
+      }
+      revealAll();
+
+      /* ── Skill bar animation ───────────────────────────────────────────── */
+      function animateSkills() {
+        document.querySelectorAll("#s-skills .sk-fill").forEach((bar) => {
+          bar.style.width = bar.dataset.w || "0%";
+        });
+      }
+
+      /* ── Modal logic ───────────────────────────────────────────────────── */
+      let activeModal = null;
+      function openModal(id) {
+        const overlay = document.getElementById("modal-overlay");
+        document
+          .querySelectorAll(".modal")
+          .forEach((m) => (m.style.display = "none"));
+        document.getElementById(id).style.display = "block";
+        overlay.classList.add("open");
+        activeModal = id;
+      }
+      function closeModal(e) {
+        if (e.target === document.getElementById("modal-overlay")) {
+          document.getElementById("modal-overlay").classList.remove("open");
+        }
+      }
+      function closeModalById(id) {
+        document.getElementById("modal-overlay").classList.remove("open");
+      }
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape")
+          document.getElementById("modal-overlay").classList.remove("open");
+      });
+    </script>
+  </body>
+</html>
